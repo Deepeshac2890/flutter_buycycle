@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "965502696183",
+    "project_id": "buycycleflutter",
+    "storage_bucket": "buycycleflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965502696183:android:861ef895e9b80e7c23f1f2",
+        "android_client_info": {
+          "package_name": "com.example.flutter_buycycle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965502696183-rm2jvqemi7m1dita59qap3kqi96m5vq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyAxflCRWwGxulwu1Uaeo90MYSiYH_lqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965502696183-rm2jvqemi7m1dita59qap3kqi96m5vq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
