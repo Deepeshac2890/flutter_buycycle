@@ -117,28 +117,6 @@ class _SellScreenState extends State<SellScreen> {
       ),
     );
   }
-
-  // AppBar buildAppBarWithoutSearch(BuildContext context, String title) {
-  //   return AppBar(
-  //     leading: IconButton(
-  //       icon: Icon(Icons.arrow_back),
-  //       onPressed: () {
-  //         Navigator.pop(context);
-  //       },
-  //     ),
-  //     actions: <Widget>[
-  //       IconButton(
-  //           icon: Icon(Icons.logout),
-  //           onPressed: () {
-  //             logout();
-  //           }),
-  //     ],
-  //     title: Center(
-  //       child: Text(title),
-  //     ),
-  //     backgroundColor: Colors.black,
-  //   );
-  // }
 }
 
 class InputWithTitle extends StatelessWidget {
