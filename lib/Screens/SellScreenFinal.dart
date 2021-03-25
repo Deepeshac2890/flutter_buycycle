@@ -296,7 +296,6 @@ class _SellScreenFinalState extends State<SellScreenFinal> {
 
   Future<void> loadAssets() async {
     List<Asset> resultList = <Asset>[];
-    String error = 'No Error Detected';
 
     resultList = await MultiImagePicker.pickImages(
       maxImages: 300,
@@ -319,7 +318,6 @@ class _SellScreenFinalState extends State<SellScreenFinal> {
 
     setState(() {
       images = resultList;
-      _error = error;
     });
   }
 }
