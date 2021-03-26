@@ -23,6 +23,8 @@ class ChatDashboard extends StatefulWidget {
 class _ChatDashboardState extends State<ChatDashboard> {
   bool loading = true;
   var listWidget;
+  bool on = true;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -70,10 +72,10 @@ class _ChatDashboardState extends State<ChatDashboard> {
           .document('Data')
           .get();
       String itemName = await snap.data['item'];
-      print(itemName);
       String price = await snap.data['price'];
       String buyer = await snap.data['buyer'];
       String seller = await snap.data['seller'];
+      String offerPrice = await snap.data['offered price'];
       var inSnap = await fs
           .collection('Messages')
           .document(chatId)
@@ -91,7 +93,6 @@ class _ChatDashboardState extends State<ChatDashboard> {
       // Image img = await Image.network(imgUrl);
       bool isBuying = buyer == loggedInUser;
       String displayName = isBuying ? seller : buyer;
-      print(urls);
       ListItems ls = ListItems(
         itemName: itemName,
         price: price,
@@ -100,6 +101,7 @@ class _ChatDashboardState extends State<ChatDashboard> {
         buyer: buyer,
         isBuying: isBuying,
         imgUrls: urls,
+        offerPrice: offerPrice,
       );
       listItems.add(ls);
     }
@@ -131,7 +133,6 @@ class _ChatDashboardState extends State<ChatDashboard> {
       if (user != null) {
         loggedInUser = user.email;
         uid = user.uid;
-        print(uid);
         chatRoomListGetter();
       }
     } catch (e) {
@@ -139,7 +140,6 @@ class _ChatDashboardState extends State<ChatDashboard> {
     }
   }
 
-  bool on = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -224,6 +224,7 @@ class ListItems extends StatelessWidget {
   final buyer;
   final isBuying;
   final imgUrls;
+  final offerPrice;
 
   ListItems(
       {this.itemName,
@@ -232,7 +233,8 @@ class ListItems extends StatelessWidget {
       this.seller,
       this.buyer,
       this.isBuying,
-      this.imgUrls});
+      this.imgUrls,
+      this.offerPrice});
 
   @override
   Widget build(BuildContext context) {
@@ -242,7 +244,7 @@ class ListItems extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) {
             return ChatScreen(
-                emailFront, itemName, price, false, isBuying, null);
+                emailFront, itemName, price, false, isBuying, null, false);
           }),
         );
       },
@@ -279,7 +281,7 @@ class ListItems extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     // After Implementation of Make Offer Section
-                    Text('Offered Price : N.A',
+                    Text('Offered Price : ' + offerPrice,
                         style: TextStyle(color: Colors.white)),
                   ],
                 ),

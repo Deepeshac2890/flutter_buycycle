@@ -135,7 +135,7 @@ class InputWithTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onHorizontalDragDown: (DragDownDetails) {
+      onHorizontalDragDown: (dragDownDetails) {
         SystemChannels.textInput.invokeMethod('TextInput.hide');
       },
       child: Column(

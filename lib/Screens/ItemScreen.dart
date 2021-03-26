@@ -48,13 +48,12 @@ class _ItemScreenState extends State<ItemScreen> {
 
   @override
   void initState() {
-    streamData();
+    initData();
     super.initState();
   }
 
-  // Tried Different technique but failed so for now using this.
-  // Will try to find alternative as for large data set method inefficient!!
-  void streamData() {
+  // All the data is coming from previous Screen
+  void initData() {
     setState(() {
       this.price = gPrice;
       this.productName = gAdTitle;
@@ -212,14 +211,12 @@ class _ItemScreenState extends State<ItemScreen> {
                   onTap: () {
                     // This is Chat Button
                     if (loading == false) {
-                      print(sellers);
-                      print(productName);
                       if (sellers != null && productName != null) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
                             return ChatScreen(sellers, productName, price, true,
-                                false, urlList);
+                                false, urlList, false);
                           }),
                         );
                       }
@@ -228,9 +225,6 @@ class _ItemScreenState extends State<ItemScreen> {
                 ),
               ),
             ),
-            // SizedBox(
-            //   width: 20,
-            // ),
             Expanded(
               child: Material(
                 elevation: 10,
@@ -244,10 +238,21 @@ class _ItemScreenState extends State<ItemScreen> {
                       width: 56, height: 56, child: Icon(Icons.local_offer)),
                   onTap: () {
                     // This is Offer Button
+                    if (loading == false) {
+                      if (sellers != null && productName != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return ChatScreen(sellers, productName, price, true,
+                                false, urlList, true);
+                          }),
+                        );
+                      }
+                    }
                   },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
