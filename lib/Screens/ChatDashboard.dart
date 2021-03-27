@@ -267,7 +267,8 @@ class ListItems extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                  // padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.only(left: 10),
+                  padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Colors.blueAccent),
