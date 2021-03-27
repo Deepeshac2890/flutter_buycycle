@@ -39,13 +39,11 @@ class _ChatDashboardState extends State<ChatDashboard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     currentUser();
     super.initState();
   }
 
   Future<void> chatRoomListGetter() async {
-    print('Refresh hits Here');
     try {
       await fs
           .collection('Users')
@@ -213,7 +211,6 @@ class _ChatDashboardState extends State<ChatDashboard> {
           Expanded(
             child: RefreshIndicator(
                 onRefresh: () async {
-                  print('Refresh is Called');
                   chatRoomListGetter();
                 },
                 child: displayItems()),
