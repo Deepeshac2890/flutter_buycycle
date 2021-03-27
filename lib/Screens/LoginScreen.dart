@@ -65,6 +65,10 @@ class _LoginScreenState extends State<LoginScreen> {
   var forgotEmailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
         backgroundColor: Colors.white,
         body: Builder(

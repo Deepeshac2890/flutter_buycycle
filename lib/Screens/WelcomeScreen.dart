@@ -7,6 +7,7 @@ import 'dart:ui';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_buycycle/Components/ReusablePaddingWidget.dart';
 import 'package:flutter_buycycle/Screens/LoginScreen.dart';
 import 'package:flutter_buycycle/Screens/RegistrationScreen.dart';
@@ -26,6 +27,11 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    // This needs to be added in each Screen's build method to prevent Landscape mode
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(

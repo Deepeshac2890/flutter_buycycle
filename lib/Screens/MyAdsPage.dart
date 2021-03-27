@@ -124,6 +124,10 @@ class _MyAdsPageState extends State<MyAdsPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return ModalProgressHUD(
       inAsyncCall: isSpinning,
       child: Scaffold(

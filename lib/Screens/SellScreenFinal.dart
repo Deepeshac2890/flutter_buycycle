@@ -139,8 +139,11 @@ class _SellScreenFinalState extends State<SellScreenFinal> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     ctx = context;
-    print('Build $loading');
     return ModalProgressHUD(
       inAsyncCall: loading,
       child: Scaffold(

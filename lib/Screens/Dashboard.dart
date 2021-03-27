@@ -127,6 +127,10 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return ModalProgressHUD(
       inAsyncCall: isSpinning,
       child: Scaffold(
@@ -217,6 +221,10 @@ class CustomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return GestureDetector(
       onTap: () {
         Navigator.push(

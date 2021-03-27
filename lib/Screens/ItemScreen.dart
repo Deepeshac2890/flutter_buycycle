@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_buycycle/Constants.dart';
 import 'package:flutter_buycycle/Screens/ChatScreen.dart';
 import 'package:flutter_buycycle/Screens/WelcomeScreen.dart';
@@ -104,6 +105,10 @@ class _ItemScreenState extends State<ItemScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

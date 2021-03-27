@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_buycycle/Components/AppBarWithoutSearch.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -144,6 +145,10 @@ class _ChatDashboardState extends State<ChatDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       appBar: AppBarWithoutSearch(ctx: context)
           .buildAppBarWithoutSearch(context, 'Inbox'),

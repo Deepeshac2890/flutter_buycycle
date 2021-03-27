@@ -29,6 +29,10 @@ class _SellScreenState extends State<SellScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       appBar: AppBarWithoutSearch(ctx: context)
           .buildAppBarWithoutSearch(context, 'Include Some Details'),
@@ -117,6 +121,10 @@ class InputWithTitle extends StatelessWidget {
       this.onChange});
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return GestureDetector(
       onHorizontalDragDown: (dragDownDetails) {
         SystemChannels.textInput.invokeMethod('TextInput.hide');

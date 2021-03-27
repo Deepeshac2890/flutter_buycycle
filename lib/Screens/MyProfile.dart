@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_buycycle/Components/AppBarWithoutSearch.dart';
 import 'package:flutter_buycycle/Components/BottomBar.dart';
 import 'package:flutter_buycycle/Screens/WelcomeScreen.dart';
@@ -120,6 +121,10 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       appBar: AppBarWithoutSearch(ctx: context)
           .buildAppBarWithoutSearch(context, ' '),
