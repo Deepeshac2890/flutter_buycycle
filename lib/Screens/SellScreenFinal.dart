@@ -1,3 +1,7 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +19,14 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../Constants.dart';
 import 'WelcomeScreen.dart';
+
+/*
+For Personal Reference
+* Elements Used here :
+* GridView
+* MultiImagePicker
+* ImageSlider
+*/
 
 String brand;
 String adTitle;
@@ -48,60 +60,23 @@ class _SellScreenFinalState extends State<SellScreenFinal> {
   bool isUploading = false;
   bool loading = false;
 
-  // Future<File> compressFile(File file) async {
-  //   final filePath = file.absolute.path;
-  //   // Create output file path
-  //   // eg:- "Volume/VM/abcd_out.jpeg"
-  //   final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
-  //   final splitted = filePath.substring(0, (lastIndex));
-  //   final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
-  //   try {
-  //     var result = await FlutterImageCompress.compressAndGetFile(
-  //       file.absolute.path,
-  //       outPath,
-  //       quality: 40,
-  //     );
-  //     print(file.lengthSync());
-  //     print(result.lengthSync());
-  //     return result;
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //   return null;
-  // }
-
-  // void imageDetector(File imgFile) async {
-  //   final visionImage = FirebaseVisionImage.fromFile(imgFile);
-  //   final ImageLabeler labeler = FirebaseVision.instance.imageLabeler(
-  //     ImageLabelerOptions(confidenceThreshold: 0.75),
-  //   );
-  //   final List<ImageLabel> labels = await labeler.processImage(visionImage);
-  //   for (ImageLabel label in labels) {
-  //     final String text = label.text;
-  //     final double confidence = label.confidence;
-  //     if (text.contains('Cycle') && confidence > 75) {
-  //       isCycle = true;
-  //     }
-  //   }
-  // }
-
-  // Future getImage() async {
-  //   final pickedFile = await picker.getImage(source: ImageSource.camera);
-  //   setState(() async {
-  //     if (pickedFile != null) {
-  //       imageClicked = File(pickedFile.path);
-  //       // await imageDetector(imageClicked);
-  //       var compressedImage = await compressFile(imageClicked);
-  //       setState(() {
-  //         img = compressedImage == null
-  //             ? Image.file(imageClicked)
-  //             : Image.file(compressedImage);
-  //       });
-  //     } else {
-  //       print('No image selected.');
-  //     }
-  //   });
-  // }
+  /*
+  void imageDetector(File imgFile) async {
+    final visionImage = FirebaseVisionImage.fromFile(imgFile);
+    final ImageLabeler labeler = FirebaseVision.instance.imageLabeler(
+      ImageLabelerOptions(confidenceThreshold: 0.75),
+    );
+    final List<ImageLabel> labels = await labeler.processImage(visionImage);
+    for (ImageLabel label in labels) {
+      final String text = label.text;
+      final double confidence = label.confidence;
+      if (text.contains('Cycle') && confidence > 75) {
+        isCycle = true;
+      }
+    }
+  }
+  This is not used for now as requires CloudLabel Subscription!!
+   */
 
   void logout() async {
     await fa.signOut();

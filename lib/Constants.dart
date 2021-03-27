@@ -1,3 +1,8 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
+
 import 'package:flutter/material.dart';
 
 const kSendButtonTextStyle = TextStyle(
@@ -14,7 +19,7 @@ const kMessageTextFieldDecoration = InputDecoration(
 
 const kMessageContainerDecoration = BoxDecoration(
   border: Border(
-    top: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+    top: BorderSide(width: 2.0),
   ),
 );
 

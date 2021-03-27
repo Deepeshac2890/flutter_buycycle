@@ -1,3 +1,8 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
+
 import 'dart:ui';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -5,6 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_buycycle/Components/ReusablePaddingWidget.dart';
 import 'package:flutter_buycycle/Screens/LoginScreen.dart';
 import 'package:flutter_buycycle/Screens/RegistrationScreen.dart';
+
+/*
+For Personal Reference
+* Elements Used here :
+Not much is being Used Here.
+*/
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'Welcome_Screen';

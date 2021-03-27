@@ -1,3 +1,8 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
+
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +18,15 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../Constants.dart';
+
+/*
+For Personal Reference
+* Elements Used here :
+* Stream Data
+* ModalProgressHud To add the spinner when needed
+* GestureDetector
+* ImageSlider
+*/
 
 Firestore fs = Firestore.instance;
 FirebaseAuth fa = FirebaseAuth.instance;
@@ -31,7 +45,6 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getCurrentUser();
     streamData();
     super.initState();

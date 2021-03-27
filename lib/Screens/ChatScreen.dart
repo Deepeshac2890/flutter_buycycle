@@ -1,3 +1,7 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
 import 'dart:async';
 import 'dart:convert';
 
@@ -6,10 +10,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_buycycle/Components/AppBarWithoutSearch.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:translator/translator.dart';
 
 import '../Constants.dart';
+
+/*
+For Personal Reference
+* Elements Used here :
+* GestureDetector
+* ImageSlider
+* Decode Encode Base64
+* Message Stream
+* Translation of Messages
+*/
 
 FirebaseUser loggedInUser;
 String emailFront;
@@ -22,6 +35,8 @@ Stream st;
 bool isBuyingFromDash;
 List<String> imgUrls;
 bool isAnOffer;
+var on = true;
+
 final offerTextController = TextEditingController();
 Codec<String, String> stringToBase64 = utf8.fuse(base64);
 final fs = Firestore.instance;
@@ -40,7 +55,7 @@ class ChatScreen extends StatefulWidget {
     isBuyingFromDash = isBuyingFromDashs;
     imgUrls = imgUrl;
     titleEmail = emailsFront;
-    isAnOffer = isAnOffers;
+    on = !(isAnOffers);
   }
 }
 
@@ -62,37 +77,43 @@ class _ChatScreenState extends State<ChatScreen> {
         'sender': loggedInUser.email,
         'text': encodeMessage(msgTxt),
         'receiver': emailFront,
-        'isOffer': isAnOffer,
+        'isOffer': !(on),
       });
-      if (fromItemScreen) {
-        if (isAnOffer) {
-          await fs
-              .collection('Messages')
-              .document(chatId)
-              .collection('Information')
-              .document('Data')
-              .setData({
-            'item': itemName,
-            'price': price,
-            'offered price': offerTextController.text,
-            'seller': emailFront,
-            'buyer': loggedInUser.email,
-          });
-        } else {
-          await fs
-              .collection('Messages')
-              .document(chatId)
-              .collection('Information')
-              .document('Data')
-              .setData({
-            'item': itemName,
-            'price': price,
-            'offered price': 'N.A',
-            'seller': emailFront,
-            'buyer': loggedInUser.email,
-          });
-        }
 
+      // This is to add the offered Price and other Item infomation
+      // for a particular chat.
+      if (!on) {
+        await fs
+            .collection('Messages')
+            .document(chatId)
+            .collection('Information')
+            .document('Data')
+            .setData({
+          'item': itemName,
+          'price': price,
+          'offered price': offerTextController.text,
+          'seller': emailFront,
+          'buyer': loggedInUser.email,
+        });
+      } else {
+        await fs
+            .collection('Messages')
+            .document(chatId)
+            .collection('Information')
+            .document('Data')
+            .setData({
+          'item': itemName,
+          'price': price,
+          'offered price': 'N.A',
+          'seller': emailFront,
+          'buyer': loggedInUser.email,
+        });
+      }
+      // Till here information is being added.
+
+      if (fromItemScreen) {
+        // This is to add the chat information in User Collection both buyer and seller
+        // This done only fromItemScreen
         await fs
             .collection('Users')
             .document(loggedInUser.uid)
@@ -115,6 +136,10 @@ class _ChatScreenState extends State<ChatScreen> {
           'Party2': emailFront,
           'Item': itemName,
         });
+        // Till here the chatId info is added.
+
+        // This is to add images url for 1st Time to Messages Collection
+        // This is done only from ItemScreen as ChatDashboard will send null imgUrls
         var imagesDoc = await fs
             .collection('Messages')
             .document(chatId)
@@ -137,6 +162,7 @@ class _ChatScreenState extends State<ChatScreen> {
             });
           }
         }
+        // Till here images url are added
       }
     } catch (e) {
       print(e);
@@ -172,15 +198,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     currentUser();
     offerTextController.text = price.toString();
   }
 
-  void clearCache() async {
-    await DefaultCacheManager().emptyCache();
-  }
+  // This can be used to clearCache currently not in use as found alternative.
+  // void clearCache() async {
+  //   await DefaultCacheManager().emptyCache();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -193,14 +219,74 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: MessageStream(),
           ),
-          buildBottom(),
+          Container(
+            child: Column(
+              children: [
+                Container(
+                  color: Colors.black54,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: FlatButton(
+                          onPressed: () {
+                            // Something will happen
+                            setState(() {
+                              on = true;
+                            });
+                          },
+                          child: Text(
+                            'Chat',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: FlatButton(
+                          onPressed: () {
+                            //Something will happen
+                            setState(() {
+                              on = false;
+                            });
+                          },
+                          child: Text(
+                            'Make Offer',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 5,
+                          color: on ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 5,
+                          color: on ? Colors.black : Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                buildBottom(),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
   Container buildBottom() {
-    if (isAnOffer)
+    if (!on)
       return buildOffer();
     else
       return buildChat();

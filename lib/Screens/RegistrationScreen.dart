@@ -1,3 +1,7 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +17,13 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../Constants.dart';
 
+/*
+For Personal Reference
+* Elements Used here :
+* DropDownMenu
+* Hero
+* GestureDetector
+*/
 class RegistrationScreen extends StatefulWidget {
   static String id = 'Registration_Screen';
   @override
@@ -32,13 +43,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   var selectedLanguage = 'English';
   @override
   void initState() {
+    dragdownRegister();
+    super.initState();
+  }
+
+  void dragdownRegister() {
+    ls = [];
     for (String languageName in languageList) {
       DropdownMenuItem dm = DropdownMenuItem<String>(
         child: Text(languageName),
         value: languageName,
       );
       ls.add(dm);
-      super.initState();
     }
   }
 
@@ -71,14 +87,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             showSpinner = false;
           });
           await user.sendEmailVerification();
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Link to Verify Email has been sent',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          );
           Navigator.pushNamed(context, DashBoard.id);
         }
       } catch (e) {
@@ -94,6 +102,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    dragdownRegister();
     return Scaffold(
       backgroundColor: Colors.white,
       body: ModalProgressHUD(

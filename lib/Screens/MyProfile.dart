@@ -1,3 +1,7 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +14,11 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:widget_circular_animator/widget_circular_animator.dart';
 
+/*
+For Personal Reference
+* Elements Used here :
+This is still in progress so more will come!!
+ */
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();

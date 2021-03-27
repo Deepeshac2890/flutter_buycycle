@@ -1,12 +1,24 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buycycle/Components/AppBarWithoutSearch.dart';
-import 'package:flutter_buycycle/Screens/WelcomeScreen.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'ChatScreen.dart';
+
+/*
+For Personal Reference
+* Elements Used here :
+* RefreshIndicators
+* GestureDetector
+* ImageSlider
+*/
 
 FirebaseAuth fu = FirebaseAuth.instance;
 Firestore fs = Firestore.instance;
@@ -32,7 +44,8 @@ class _ChatDashboardState extends State<ChatDashboard> {
     super.initState();
   }
 
-  void chatRoomListGetter() async {
+  Future<void> chatRoomListGetter() async {
+    print('Refresh hits Here');
     try {
       await fs
           .collection('Users')
@@ -48,15 +61,6 @@ class _ChatDashboardState extends State<ChatDashboard> {
           }
         });
       });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void logout() async {
-    try {
-      await fu.signOut();
-      Navigator.popUntil(context, ModalRoute.withName(WelcomeScreen.id));
     } catch (e) {
       print(e);
     }
@@ -207,7 +211,12 @@ class _ChatDashboardState extends State<ChatDashboard> {
             height: 10,
           ),
           Expanded(
-            child: displayItems(),
+            child: RefreshIndicator(
+                onRefresh: () async {
+                  print('Refresh is Called');
+                  chatRoomListGetter();
+                },
+                child: displayItems()),
           ),
         ],
       ),

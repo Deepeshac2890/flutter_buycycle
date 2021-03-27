@@ -1,3 +1,7 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +12,17 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../Constants.dart';
 
+/*
+For Personal Reference
+* Elements Used here :
+* Alert
+* builder for Scaffold
+* ModalProgressHud
+* Hero to add the smooth transition animation for images between 2 screens
+* Flexible Widget
+* SnackBar
+* GestureDetector
+*/
 class LoginScreen extends StatefulWidget {
   static String id = 'Login_Screen';
   @override

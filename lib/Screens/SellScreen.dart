@@ -1,4 +1,7 @@
-import 'dart:io';
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_buycycle/Components/AppBarWithoutSearch.dart';
 import 'package:flutter_buycycle/Constants.dart';
 import 'package:flutter_buycycle/Screens/SellScreenFinal.dart';
-import 'package:flutter_buycycle/Screens/WelcomeScreen.dart';
-import 'package:image_picker/image_picker.dart';
 
+/*
+For Personal Reference
+* Elements Used here :
+* Gesture Detector
+*/
 class SellScreen extends StatefulWidget {
   static String id = 'Sell_Screen';
   @override
@@ -19,30 +25,7 @@ class _SellScreenState extends State<SellScreen> {
   String brand;
   String titleAd;
   String addInfo;
-  File imageClicked;
-  Image img = Image.asset('assets/click.png');
-  final picker = ImagePicker();
   FirebaseAuth fa = FirebaseAuth.instance;
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {
-        imageClicked = File(pickedFile.path);
-        setState(() {
-          img = Image.file(imageClicked);
-        });
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  void logout() async {
-    await fa.signOut();
-    Navigator.pushNamed(context, WelcomeScreen.id);
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,7 @@
+/*
+Created By: Deepesh Acharya
+Maintained By: Deepesh Acharya
+*/
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,6 +12,14 @@ import 'package:flutter_buycycle/Screens/ChatScreen.dart';
 import 'package:flutter_buycycle/Screens/WelcomeScreen.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
+/*
+For Personal Reference
+* Elements Used here :
+* InkWell
+* GestureDetector
+* Builder for Scaffold body
+* ImageSlider
+*/
 String gUrl;
 List<String> urlList;
 String gPrice;
@@ -90,7 +102,6 @@ class _ItemScreenState extends State<ItemScreen> {
     );
   }
 
-  // img == null ? Image.asset('assets/default.png') : img,
   @override
   Widget build(BuildContext context) {
     return Scaffold(
