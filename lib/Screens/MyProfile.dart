@@ -19,7 +19,12 @@ import 'package:widget_circular_animator/widget_circular_animator.dart';
 For Personal Reference
 * Elements Used here :
 This is still in progress so more will come!!
- */
+*/
+
+// My Personal TODO List
+// TODO: Add more information in this portion
+// TODO: Add edit option for certain details
+
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();

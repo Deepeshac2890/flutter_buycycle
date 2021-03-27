@@ -24,6 +24,13 @@ For Personal Reference
 * Translation of Messages
 */
 
+// My Personal TODO list
+// TODO: Add Check condition for the scenario when send is pressed on empty message
+// TODO: Add functionality to minimize and maximize the chat and makeOffer portion.
+// TODO: Add option to view the product for which the deal is being made on the Chat Screen
+// TODO: Add functionality to open the profile details when the name show in app bar is clicked
+// TODO: Add unread messages functionality for which schema change is needed.
+
 FirebaseUser loggedInUser;
 String emailFront;
 String itemName;
@@ -481,7 +488,7 @@ class PriceSuggestor extends StatelessWidget {
             // Something will happen
             offerTextController.text = text;
           },
-          child: Text(text),
+          child: FittedBox(fit: BoxFit.fitWidth, child: Text(text)),
         ),
       ),
     );
