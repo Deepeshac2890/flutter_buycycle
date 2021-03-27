@@ -11,6 +11,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return BottomAppBar(
+      shape: const CircularNotchedRectangle(),
       color: Colors.white,
       child: Container(
         padding: EdgeInsets.all(10),

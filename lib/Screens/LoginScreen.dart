@@ -47,78 +47,151 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  var forgotEmailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: ModalProgressHUD(
-        inAsyncCall: isSpinning,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Flexible(
-                child: Hero(
-                  tag: 'logo',
-                  child: Container(
-                    child: Image.asset(
-                      'assets/Bike.gif',
-                      height: 200.0,
-                      width: 200.0,
+        backgroundColor: Colors.white,
+        body: Builder(
+          builder: (BuildContext innerContext) {
+            return ModalProgressHUD(
+              inAsyncCall: isSpinning,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Flexible(
+                      child: Hero(
+                        tag: 'logo',
+                        child: Container(
+                          child: Image.asset(
+                            'assets/Bike.gif',
+                            height: 200.0,
+                            width: 200.0,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 48.0,
-              ),
-              GestureDetector(
-                onHorizontalDragDown: (DragDownDetails) {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                },
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (value) {
-                    emailId = value;
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter Your Email',
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              GestureDetector(
-                onHorizontalDragDown: (DragDownDetails) {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                },
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  obscureText: true,
-                  onChanged: (value) {
-                    passwd = value;
-                  },
-                  decoration: kTextFieldDecoration,
-                ),
-              ),
-              SizedBox(
-                height: 24.0,
-              ),
-              Paddy(
-                      op: () {
-                        login();
+                    SizedBox(
+                      height: 48.0,
+                    ),
+                    GestureDetector(
+                      onHorizontalDragDown: (DragDownDetails) {
+                        SystemChannels.textInput.invokeMethod('TextInput.hide');
                       },
-                      textVal: 'Login',
-                      bColor: Colors.blue)
-                  .getPadding(),
-            ],
-          ),
-        ),
-      ),
-    );
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.emailAddress,
+                        onChanged: (value) {
+                          emailId = value;
+                        },
+                        decoration: kTextFieldDecoration.copyWith(
+                          hintText: 'Enter Your Email',
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    GestureDetector(
+                      onHorizontalDragDown: (DragDownDetails) {
+                        SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      },
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        obscureText: true,
+                        onChanged: (value) {
+                          passwd = value;
+                        },
+                        decoration: kTextFieldDecoration,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 12.0,
+                    ),
+                    Paddy(
+                            op: () {
+                              login();
+                            },
+                            textVal: 'Login',
+                            bColor: Colors.blue)
+                        .getPadding(),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: FlatButton(
+                        child: Text('Forgot Password ?'),
+                        onPressed: () {
+                          // Implement Forgot Password Page
+                          Alert(
+                            context: context,
+                            title: 'Forgot Password',
+                            content: Column(
+                              children: [
+                                GestureDetector(
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      icon: Icon(Icons.account_circle),
+                                      labelText: 'Username',
+                                    ),
+                                    onChanged: (value) {
+                                      // Do something
+                                    },
+                                    controller: forgotEmailController,
+                                  ),
+                                  onHorizontalDragDown: (dragDownDetails) {
+                                    SystemChannels.textInput
+                                        .invokeMethod('TextInput.hide');
+                                  },
+                                ),
+                              ],
+                            ),
+                            buttons: [
+                              DialogButton(
+                                onPressed: () async {
+                                  var email = forgotEmailController.text;
+                                  try {
+                                    await fa.sendPasswordResetEmail(
+                                        email: email);
+                                    Scaffold.of(innerContext).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Link has been sent to Registered Email-Id',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    );
+                                  } catch (e) {
+                                    Scaffold.of(innerContext).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Invalid Email Id. Try Again !',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  Navigator.pop(context);
+                                  forgotEmailController.clear();
+                                },
+                                child: Text(
+                                  "Request",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
+                            ],
+                          ).show();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ));
   }
 }

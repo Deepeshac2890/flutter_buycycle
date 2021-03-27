@@ -70,14 +70,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           setState(() {
             showSpinner = false;
           });
+          await user.sendEmailVerification();
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Link to Verify Email has been sent',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          );
           Navigator.pushNamed(context, DashBoard.id);
         }
       } catch (e) {
         print(e);
       }
     } else {
-      // Need to show Alert here instead
-      print('Wrong Details ');
       Alert(context: context, title: 'Incorrect Details').show();
       setState(() {
         showSpinner = false;
