@@ -22,6 +22,7 @@ For Personal Reference
 * Decode Encode Base64
 * Message Stream
 * Translation of Messages
+* FittedBox - This can be used to dynamically resize the Text
 */
 
 // My Personal TODO list
