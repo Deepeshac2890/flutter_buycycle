@@ -41,12 +41,20 @@ class AppBarWithoutSearch {
   }
 
   Image getImage() {
-    var img;
-    try {
-      img = Image.network(photo);
-    } catch (e) {
-      // In case if error comes when trying to get the image from URL.
-      img = Image.asset('assets/click.png');
+    Image img;
+    print('asd');
+    if (photo.toString() != '') {
+      print('Getting here');
+      try {
+        img = Image.network(photo);
+      } catch (e) {
+        // In case if error comes when trying to get the image from URL.
+        img = Image.asset('assets/profile.png');
+      }
+    } else {
+      // In case if image does not exist
+      print('Getting Here 2');
+      img = Image.asset('assets/profile.png');
     }
     return img;
   }
@@ -79,6 +87,7 @@ class AppBarWithoutSearch {
         );
       }
     } else {
+      print(photo);
       if (isClickable) {
         return GestureDetector(
           onTap: () {

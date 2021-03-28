@@ -46,7 +46,7 @@ class _ProfileDetailsState extends State<ProfileDetails>
   var loggedUser;
   File imageClicked;
   File imgFile;
-  Image img = Image.asset('assets/click.png');
+  Image img = Image.asset('assets/profile.png');
 
   AnimatedBuilder getContainer() {
     return new AnimatedBuilder(
@@ -98,7 +98,7 @@ class _ProfileDetailsState extends State<ProfileDetails>
         try {
           img = Image.network(imgUrl);
         } catch (e) {
-          img = Image.asset('assets/click.png');
+          img = Image.asset('assets/profile.png');
         }
       }
     });
