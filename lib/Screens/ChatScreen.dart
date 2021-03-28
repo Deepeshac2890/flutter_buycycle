@@ -31,6 +31,7 @@ For Personal Reference
 // TODO: Add option to view the product for which the deal is being made on the Chat Screen
 // TODO: Add functionality to open the profile details when the name show in app bar is clicked
 // TODO: Add unread messages functionality for which schema change is needed.
+// TODO: Add profile Pic in the appbar of chatscreen to show image of the person in front.
 
 FirebaseUser loggedInUser;
 String emailFront;
@@ -216,8 +217,10 @@ class _ChatScreenState extends State<ChatScreen> {
   //   await DefaultCacheManager().emptyCache();
   // }
 
+  var ctx;
   @override
   Widget build(BuildContext context) {
+    ctx = context;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -327,7 +330,7 @@ class _ChatScreenState extends State<ChatScreen> {
           FlatButton(
             onPressed: () {
               messageTextController.clear();
-              sendMessage();
+              if (msgTxt.isNotEmpty) sendMessage();
             },
             child: Text(
               'Send',
@@ -385,6 +388,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   SystemChannels.textInput.invokeMethod('TextInput.hide');
                 },
                 child: TextField(
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                  ],
                   controller: offerTextController,
                   onChanged: (value) {
                     msgTxt = value;
@@ -430,8 +436,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       borderRadius: BorderRadius.circular(9)),
                   onPressed: () {
                     messageTextController.clear();
+
                     msgTxt = offerTextController.text;
-                    sendMessage();
+                    if (msgTxt.isNotEmpty) sendMessage();
                   },
                   child: Text(
                     'Send',
@@ -459,16 +466,20 @@ String getPriceSuggestion(int level) {
 
 String getText() {
   String prices = offerTextController.text;
-  int offerVal = int.parse(prices);
-  int askedVal = int.parse(price);
-  if (offerVal > askedVal) {
-    return 'Why Do you want Overpay !!';
-  } else if (offerVal / askedVal > 0.65) {
-    return 'High Chances of Getting Reply !!';
-  } else if (offerVal / askedVal > 0.45) {
-    return 'Medium Chances of Getting Reply !!';
+  if (prices.isNotEmpty) {
+    int offerVal = int.parse(prices);
+    int askedVal = int.parse(price);
+    if (offerVal > askedVal) {
+      return 'Why Do you want Overpay !!';
+    } else if (offerVal / askedVal > 0.65) {
+      return 'High Chances of Getting Reply !!';
+    } else if (offerVal / askedVal > 0.45) {
+      return 'Medium Chances of Getting Reply !!';
+    } else {
+      return 'Low Chances of Getting Reply !!';
+    }
   } else {
-    return 'Low Chances of Getting Reply !!';
+    return 'Please Input Values';
   }
 }
 
