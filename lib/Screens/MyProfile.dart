@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_buycycle/Components/AppBarWithoutSearch.dart';
@@ -13,17 +14,21 @@ import 'package:flutter_buycycle/Components/BottomBar.dart';
 import 'package:flutter_buycycle/Screens/WelcomeScreen.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:widget_circular_animator/widget_circular_animator.dart';
 
 /*
 For Personal Reference
 * Elements Used here :
-This is still in progress so more will come!!
+* Compress File
+* ModalProgressHUD
 */
 
 // My Personal TODO List
 // TODO: Add more information in this portion
 // TODO: Add edit option for certain details
+// TODO: Complete Profile Photo Support.
 
 class Profile extends StatefulWidget {
   @override
@@ -33,14 +38,20 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   FirebaseAuth fa = FirebaseAuth.instance;
   Firestore fs = Firestore.instance;
-  String imgName;
+  FirebaseStorage fbs = FirebaseStorage.instance;
+  String imgUrl;
   String name = '';
-  AnimationController _resizableController;
+  String language = '';
   String email = '';
+  AnimationController _resizableController;
   var loggedUser;
   File imageClicked;
+  File imgFile;
+  bool isSpinning = false;
+  bool showUpload = false;
   Image img = Image.asset('assets/click.png');
   final picker = ImagePicker();
+  Image oldPic = Image.asset('assets/click.png');
 
   void logout() async {
     await fa.signOut();
@@ -71,7 +82,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
 
   void currentUser() async {
     loggedUser = await fa.currentUser();
-    print(loggedUser.uid);
     getData();
   }
 
@@ -84,14 +94,21 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
         .get();
     String namea = await data.data['Name'];
     String emaila = await data.data['Email'];
-    String imgNamea = await data.data['Profile Image'];
-    print(namea);
+    String imgUrla = await data.data['Profile Image'];
+    String languagea = await data.data['Language'];
 
     setState(() {
       name = namea;
-      print(name);
+      language = languagea;
       email = emaila;
-      imgName = imgNamea;
+      imgUrl = imgUrla;
+      if (imgUrl.isNotEmpty) {
+        try {
+          img = Image.network(imgUrl);
+        } catch (e) {
+          img = Image.asset('assets/click.png');
+        }
+      }
     });
   }
 
@@ -130,82 +147,191 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return Scaffold(
-      appBar: AppBarWithoutSearch(ctx: context)
-          .buildAppBarWithoutSearch(context, ' '),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Center(
-              child: WidgetCircularAnimator(
-                innerIconsSize: 3,
-                outerIconsSize: 3,
-                innerAnimation: Curves.bounceIn,
-                outerAnimation: Curves.bounceIn,
-                innerColor: Colors.orangeAccent,
-                reverse: false,
-                outerColor: Colors.orangeAccent,
-                innerAnimationSeconds: 10,
-                outerAnimationSeconds: 10,
-                child: Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      getImage();
-                    },
-                    child: ClipRRect(
-                      borderRadius: new BorderRadius.circular(8.0),
-                      // need to update this with proper crop system !!
-                      child: Container(
-                        decoration: BoxDecoration(
+    return ModalProgressHUD(
+      inAsyncCall: isSpinning,
+      child: Scaffold(
+        appBar: AppBarWithoutSearch(ctx: context)
+            .buildAppBarWithoutSearch(context, ' '),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Center(
+                child: WidgetCircularAnimator(
+                  innerIconsSize: 3,
+                  outerIconsSize: 3,
+                  innerAnimation: Curves.bounceIn,
+                  outerAnimation: Curves.bounceIn,
+                  innerColor: Colors.orangeAccent,
+                  reverse: false,
+                  outerColor: Colors.orangeAccent,
+                  innerAnimationSeconds: 10,
+                  outerAnimationSeconds: 10,
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        getImage();
+                      },
+                      child: ClipRRect(
+                        borderRadius: new BorderRadius.circular(8.0),
+                        // need to update this with proper crop system !!
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: img.image, // picked file
-                                fit: BoxFit.fill)),
+                              image: img.image, // picked file
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: Column(children: [
-              Container(
-                child: Text(
-                  name,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+            uploadWidget(),
+            Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    child: Text(
+                      name,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                child: Text(
-                  email,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
+                  Container(
+                    child: Text(
+                      email,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ]),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomBar(
-        ctx: context,
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomBar(
+          ctx: context,
+        ),
       ),
     );
   }
 
+  void uploadPic() async {
+    setState(() {
+      isSpinning = true;
+    });
+    var reference = fbs.ref().child('Profile Images').child(loggedUser.email);
+
+    try {
+      StorageUploadTask uploadTask = await reference.putFile(imgFile);
+      StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+      String url = await storageTaskSnapshot.ref.getDownloadURL();
+      var data = await fs
+          .collection('Users')
+          .document(loggedUser.uid)
+          .collection('Details')
+          .document('Details')
+          .setData({
+        'Email': email,
+        'Language': language,
+        'Name': name,
+        'Profile Image': url
+      });
+      await getData();
+    } catch (e) {
+      Alert(
+          context: context,
+          title: 'Please try Again Something Bad Happened !!');
+    }
+    setState(() {
+      showUpload = false;
+      isSpinning = false;
+    });
+  }
+
+  Widget uploadWidget() {
+    if (showUpload) {
+      return Center(
+        child: Container(
+          margin: EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Material(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.blueAccent,
+                child: InkWell(
+                  splashColor: Colors.redAccent,
+                  child: FlatButton(
+                    child: Text(
+                      'Upload Profile Pic',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900, color: Colors.black),
+                    ),
+                  ),
+                  onTap: () {
+                    // Do something here
+                    uploadPic();
+                  },
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Material(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.blueAccent,
+                child: InkWell(
+                  splashColor: Colors.redAccent,
+                  child: FlatButton(
+                    child: Text(
+                      'Revert to Old Pic',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900, color: Colors.black),
+                    ),
+                  ),
+                  onTap: () {
+                    // Do something here
+                    revertPic();
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else
+      return Container();
+  }
+
+  void revertPic() {
+    setState(() {
+      img = oldPic;
+      showUpload = false;
+    });
+  }
+
   // This is coming from flutter_image_compress package.
+  // Used here instead of Asset Compression as it performs better in SellScreenFinal
+  // Asset compression is used as there that is appropriate
   Future<File> compressFile(File file) async {
     final filePath = file.absolute.path;
     // Create output file path
@@ -217,7 +343,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
       var result = await FlutterImageCompress.compressAndGetFile(
         file.absolute.path,
         outPath,
-        quality: 40,
+        quality: 60,
       );
       print(file.lengthSync());
       print(result.lengthSync());
@@ -229,6 +355,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   }
 
   Future getImage() async {
+    oldPic = img;
     final pickedFile = await picker.getImage(
         source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
 
@@ -241,9 +368,15 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
           img = compressedImage == null
               ? Image.file(imageClicked)
               : Image.file(compressedImage);
+          imgFile = compressedImage == null ? imageClicked : compressedImage;
+          showUpload = true;
         });
       } else {
-        print('No image selected.');
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Image Selection Failed'),
+          ),
+        );
       }
     });
   }
