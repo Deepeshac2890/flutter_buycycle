@@ -115,7 +115,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   @override
   void initState() {
     currentUser();
-    // TODO: implement initState
     _resizableController = new AnimationController(
       vsync: this,
       duration: new Duration(

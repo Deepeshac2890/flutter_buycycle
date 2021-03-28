@@ -29,9 +29,7 @@ For Personal Reference
 // TODO: Add Check condition for the scenario when send is pressed on empty message
 // TODO: Add functionality to minimize and maximize the chat and makeOffer portion.
 // TODO: Add option to view the product for which the deal is being made on the Chat Screen
-// TODO: Add functionality to open the profile details when the name show in app bar is clicked
 // TODO: Add unread messages functionality for which schema change is needed.
-// TODO: Add profile Pic in the appbar of chatscreen to show image of the person in front.
 
 FirebaseUser loggedInUser;
 String emailFront;
@@ -41,6 +39,7 @@ String chatId;
 bool fromItemScreen;
 String titleEmail = ' ';
 Stream st;
+String profilePicUrl;
 bool isBuyingFromDash;
 List<String> imgUrls;
 bool isAnOffer;
@@ -192,6 +191,15 @@ class _ChatScreenState extends State<ChatScreen> {
           } else
             chatId = emailFront + loggedInUser.email + itemName;
         }
+        var uidSnap = await fs.collection('UIDS').document(titleEmail).get();
+        var uid = await uidSnap.data['uid'];
+        var profilePicSnap = await fs
+            .collection('Users')
+            .document(uid)
+            .collection('Details')
+            .document('Details')
+            .get();
+        profilePicUrl = profilePicSnap.data['Profile Image'];
         setState(() {
           st = fs
               .collection('Messages')
@@ -226,7 +234,8 @@ class _ChatScreenState extends State<ChatScreen> {
       DeviceOrientation.portraitDown,
     ]);
     return Scaffold(
-      appBar: AppBarWithoutSearch(ctx: context)
+      appBar: AppBarWithoutSearch.chatScreen(
+              ctx: context, photo: profilePicUrl, isClickable: true)
           .buildAppBarWithoutSearch(context, titleEmail),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
