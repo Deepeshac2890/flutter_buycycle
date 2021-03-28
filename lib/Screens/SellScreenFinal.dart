@@ -49,7 +49,6 @@ class SellScreenFinal extends StatefulWidget {
 
 class _SellScreenFinalState extends State<SellScreenFinal> {
   File imageClicked;
-  Image img = Image.asset('assets/click.png');
   final picker = ImagePicker();
   FirebaseStorage fbs = FirebaseStorage.instance;
   FirebaseAuth fa = FirebaseAuth.instance;

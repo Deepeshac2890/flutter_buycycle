@@ -49,9 +49,9 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   File imgFile;
   bool isSpinning = false;
   bool showUpload = false;
-  Image img = Image.asset('assets/click.png');
+  Image img = Image.asset('assets/profile.png');
   final picker = ImagePicker();
-  Image oldPic = Image.asset('assets/click.png');
+  Image oldPic = Image.asset('assets/profile.png');
 
   void logout() async {
     await fa.signOut();
@@ -106,7 +106,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
         try {
           img = Image.network(imgUrl);
         } catch (e) {
-          img = Image.asset('assets/click.png');
+          img = Image.asset('assets/profile.png');
         }
       }
     });
