@@ -28,7 +28,6 @@ For Personal Reference
 // My Personal TODO List
 // TODO: Add more information in this portion
 // TODO: Add edit option for certain details
-// TODO: Complete Profile Photo Support.
 
 class Profile extends StatefulWidget {
   @override
@@ -52,11 +51,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   Image img = Image.asset('assets/profile.png');
   final picker = ImagePicker();
   Image oldPic = Image.asset('assets/profile.png');
-
-  void logout() async {
-    await fa.signOut();
-    Navigator.popUntil(context, ModalRoute.withName(WelcomeScreen.id));
-  }
 
   AnimatedBuilder getContainer() {
     return new AnimatedBuilder(

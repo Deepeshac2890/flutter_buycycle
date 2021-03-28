@@ -40,7 +40,6 @@ class _MyAdsPageState extends State<MyAdsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getCurrentUser();
     streamData();
     super.initState();
