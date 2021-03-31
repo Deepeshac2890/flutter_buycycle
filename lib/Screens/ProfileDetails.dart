@@ -140,7 +140,7 @@ class _ProfileDetailsState extends State<ProfileDetails>
     ]);
     return Scaffold(
       appBar: AppBarWithoutSearch(ctx: context)
-          .buildAppBarWithoutSearch(context, ' '),
+          .buildAppBarWithoutSearch(context, ' ', true),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

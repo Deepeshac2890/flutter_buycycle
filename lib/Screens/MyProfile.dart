@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_buycycle/Components/AppBarWithoutSearch.dart';
 import 'package:flutter_buycycle/Components/BottomBar.dart';
-import 'package:flutter_buycycle/Screens/WelcomeScreen.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -144,7 +143,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
       inAsyncCall: isSpinning,
       child: Scaffold(
         appBar: AppBarWithoutSearch(ctx: context)
-            .buildAppBarWithoutSearch(context, ' '),
+            .buildAppBarWithoutSearch(context, ' ', true),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

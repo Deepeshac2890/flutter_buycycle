@@ -35,7 +35,7 @@ class _SellScreenState extends State<SellScreen> {
     ]);
     return Scaffold(
       appBar: AppBarWithoutSearch(ctx: context)
-          .buildAppBarWithoutSearch(context, 'Include Some Details'),
+          .buildAppBarWithoutSearch(context, 'Include Some Details', true),
       body: Container(
         color: Colors.white,
         child: Column(

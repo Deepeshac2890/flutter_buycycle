@@ -24,6 +24,8 @@ For Personal Reference
 * Hero
 * GestureDetector
 */
+// Personal TODO List:
+// TODO: Fix the should make public Radio buttons in case of typing
 class RegistrationScreen extends StatefulWidget {
   static String id = 'Registration_Screen';
   @override
@@ -41,6 +43,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   // String gender; Implement the gender Radio Buttons Later
   bool showSpinner = false;
   var selectedLanguage = 'English';
+  String phoneNumber;
+  String answer = 'Yes';
+
   @override
   void initState() {
     dragdownRegister();
@@ -78,6 +83,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             'Email': emailId,
             'Profile Image': '',
             'Language': languageMap[selectedLanguage],
+            'Phone Number': phoneNumber,
+            'isPhonePublic': answer,
           });
           await fs
               .collection('UIDS')
@@ -169,6 +176,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               SizedBox(
                 height: 8.0,
               ),
+              GestureDetector(
+                onHorizontalDragDown: (DragDownDetails) {
+                  SystemChannels.textInput.invokeMethod('TextInput.hide');
+                },
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    phoneNumber = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                    hintText: 'Enter Your Phone Number',
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 8.0,
               ),
@@ -202,16 +224,52 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(bottom: 30.0),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text('Allow Buyers to Contact You ? '),
+                  Row(
+                    children: [
+                      Radio(
+                        value: 'Yes',
+                        groupValue: answer,
+                        onChanged: (value) {
+                          setState(() {
+                            answer = value;
+                          });
+                        },
+                      ),
+                      Text('Yes'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Radio(
+                        value: 'No',
+                        groupValue: answer,
+                        onChanged: (value) {
+                          setState(() {
+                            answer = value;
+                          });
+                        },
+                      ),
+                      Text('No'),
+                    ],
+                  )
+                ],
+              ),
               SizedBox(
                 height: 24.0,
               ),
-              Paddy(
-                      op: () async {
-                        register();
-                      },
-                      textVal: 'Register',
-                      bColor: Colors.blue)
-                  .getPadding(),
+              Flexible(
+                child: Paddy(
+                        op: () async {
+                          register();
+                        },
+                        textVal: 'Register',
+                        bColor: Colors.blue)
+                    .getPadding(),
+              ),
             ],
           ),
         ),

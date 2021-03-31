@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buycycle/Screens/ProfileDetails.dart';
 import 'package:flutter_buycycle/Screens/WelcomeScreen.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class AppBarWithoutSearch {
   final ctx;
@@ -14,13 +15,16 @@ class AppBarWithoutSearch {
   var profilePic;
   var isClickable = false;
   FirebaseAuth fa = FirebaseAuth.instance;
+  var phoneNumber;
 
   AppBarWithoutSearch({this.ctx});
 
   // This is a named Constructor as in DART only one unnamed constructor can be made
-  AppBarWithoutSearch.chatScreen({this.ctx, this.photo, this.isClickable});
+  AppBarWithoutSearch.chatScreen(
+      {this.ctx, this.photo, this.isClickable, this.phoneNumber});
 
-  AppBar buildAppBarWithoutSearch(BuildContext context, String title) {
+  AppBar buildAppBarWithoutSearch(
+      BuildContext context, String title, bool isActionLogout) {
     return AppBar(
       leading: IconButton(
         icon: Icon(Icons.arrow_back),
@@ -28,16 +32,30 @@ class AppBarWithoutSearch {
           Navigator.pop(context);
         },
       ),
-      actions: <Widget>[
-        IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              logout();
-            }),
-      ],
+      actions: <Widget>[actionWidget(isActionLogout)],
       title: buildTitle(title),
       backgroundColor: Colors.black,
     );
+  }
+
+  Widget actionWidget(isLogout) {
+    if (isLogout) {
+      return IconButton(
+          icon: Icon(Icons.logout),
+          onPressed: () {
+            logout();
+          });
+    } else {
+      return IconButton(
+          icon: Icon(Icons.call),
+          onPressed: () {
+            callPerson();
+          });
+    }
+  }
+
+  void callPerson() {
+    if (phoneNumber != null) UrlLauncher.launch('tel:$phoneNumber');
   }
 
   Image getImage() {
@@ -107,7 +125,7 @@ class AppBarWithoutSearch {
               SizedBox(
                 width: 5,
               ),
-              Text(title)
+              Text(title),
             ],
           ),
         );
@@ -121,7 +139,7 @@ class AppBarWithoutSearch {
             SizedBox(
               width: 5,
             ),
-            Text(title)
+            Text(title),
           ],
         );
       }

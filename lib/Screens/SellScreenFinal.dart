@@ -147,7 +147,7 @@ class _SellScreenFinalState extends State<SellScreenFinal> {
       inAsyncCall: loading,
       child: Scaffold(
         appBar: AppBarWithoutSearch(ctx: context)
-            .buildAppBarWithoutSearch(context, 'Final Details'),
+            .buildAppBarWithoutSearch(context, 'Final Details', true),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

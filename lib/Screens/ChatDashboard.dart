@@ -151,7 +151,7 @@ class _ChatDashboardState extends State<ChatDashboard> {
     ]);
     return Scaffold(
       appBar: AppBarWithoutSearch(ctx: context)
-          .buildAppBarWithoutSearch(context, 'Inbox'),
+          .buildAppBarWithoutSearch(context, 'Inbox', true),
       backgroundColor: Colors.black,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

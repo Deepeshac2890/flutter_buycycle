@@ -21,15 +21,16 @@ For Personal Reference
 * ImageSlider
 * Decode Encode Base64
 * Message Stream
+* Visibility - To hide or show the widget programmatically.
 * Translation of Messages
 * FittedBox - This can be used to dynamically resize the Text
 */
 
 // My Personal TODO list
 // TODO: Add Check condition for the scenario when send is pressed on empty message
-// TODO: Add functionality to minimize and maximize the chat and makeOffer portion.
 // TODO: Add option to view the product for which the deal is being made on the Chat Screen
 // TODO: Add unread messages functionality for which schema change is needed.
+// TODO: Add option to ask for number and when approved allow the phone call.
 
 FirebaseUser loggedInUser;
 String emailFront;
@@ -44,6 +45,7 @@ bool isBuyingFromDash;
 List<String> imgUrls;
 bool isAnOffer;
 var on = true;
+String phoneNumber;
 
 final offerTextController = TextEditingController();
 Codec<String, String> stringToBase64 = utf8.fuse(base64);
@@ -74,6 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
   String msgTxt;
   String offer;
   bool messageNotLoading = true;
+  bool isShown = true;
 
   String encodeMessage(String msg) {
     return stringToBase64.encode(msg);
@@ -199,7 +202,11 @@ class _ChatScreenState extends State<ChatScreen> {
             .collection('Details')
             .document('Details')
             .get();
-        profilePicUrl = profilePicSnap.data['Profile Image'];
+        var isPhonePub = await profilePicSnap.data['isPhonePublic'];
+        if (isPhonePub.toString() == 'Yes') {
+          phoneNumber = await profilePicSnap.data['Phone Number'];
+        }
+        profilePicUrl = await profilePicSnap.data['Profile Image'];
         setState(() {
           st = fs
               .collection('Messages')
@@ -235,8 +242,11 @@ class _ChatScreenState extends State<ChatScreen> {
     ]);
     return Scaffold(
       appBar: AppBarWithoutSearch.chatScreen(
-              ctx: context, photo: profilePicUrl, isClickable: true)
-          .buildAppBarWithoutSearch(context, titleEmail),
+              ctx: context,
+              photo: profilePicUrl,
+              isClickable: true,
+              phoneNumber: phoneNumber)
+          .buildAppBarWithoutSearch(context, titleEmail, false),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -248,38 +258,47 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 Container(
                   color: Colors.black54,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: FlatButton(
-                          onPressed: () {
-                            // Something will happen
-                            setState(() {
-                              on = true;
-                            });
-                          },
-                          child: Text(
-                            'Chat',
-                            style: TextStyle(color: Colors.white),
+                  child: GestureDetector(
+                    onHorizontalDragDown: (dragDown) {
+                      setState(() {
+                        isShown = false;
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: FlatButton(
+                            onPressed: () {
+                              // Something will happen
+                              setState(() {
+                                on = true;
+                                isShown = true;
+                              });
+                            },
+                            child: Text(
+                              'Chat',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: FlatButton(
-                          onPressed: () {
-                            //Something will happen
-                            setState(() {
-                              on = false;
-                            });
-                          },
-                          child: Text(
-                            'Make Offer',
-                            style: TextStyle(color: Colors.white),
+                        Expanded(
+                          child: FlatButton(
+                            onPressed: () {
+                              //Something will happen
+                              setState(() {
+                                on = false;
+                                isShown = true;
+                              });
+                            },
+                            child: Text(
+                              'Make Offer',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -300,7 +319,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ],
                   ),
                 ),
-                buildBottom(),
+                Visibility(visible: isShown, child: buildBottom()),
               ],
             ),
           ),
