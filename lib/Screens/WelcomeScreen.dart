@@ -64,20 +64,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             SizedBox(
               height: 48.0,
             ),
-            Paddy(
-                    op: () {
-                      Navigator.pushNamed(context, LoginScreen.id);
-                    },
-                    textVal: 'Log In',
-                    bColor: Colors.lightBlue)
-                .getPadding(),
-            Paddy(
-                    op: () {
-                      Navigator.pushNamed(context, RegistrationScreen.id);
-                    },
-                    textVal: 'Register',
-                    bColor: Colors.blue)
-                .getPadding(),
+            Hero(
+              tag: 'Login',
+              child: Paddy(
+                      op: () {
+                        Navigator.pushNamed(context, LoginScreen.id);
+                      },
+                      textVal: 'Log In',
+                      bColor: Colors.lightBlue)
+                  .getPadding(),
+            ),
+            Hero(
+              tag: 'Register',
+              child: Paddy(
+                      op: () {
+                        Navigator.pushNamed(context, RegistrationScreen.id);
+                      },
+                      textVal: 'Register',
+                      bColor: Colors.blue)
+                  .getPadding(),
+            ),
           ],
         ),
       ),

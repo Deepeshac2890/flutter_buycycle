@@ -24,8 +24,8 @@ For Personal Reference
 * Hero
 * GestureDetector
 */
-// Personal TODO List:
-// TODO: Fix the should make public Radio buttons in case of typing
+// TODO List:
+// TODO: Minor Fix needed in the layout. If needed create 2 reg pages.
 class RegistrationScreen extends StatefulWidget {
   static String id = 'Registration_Screen';
   @override
@@ -48,11 +48,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   void initState() {
-    dragdownRegister();
+    dragDownRegister();
     super.initState();
   }
 
-  void dragdownRegister() {
+  void dragDownRegister() {
     ls = [];
     for (String languageName in languageList) {
       DropdownMenuItem dm = DropdownMenuItem<String>(
@@ -113,7 +113,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    dragdownRegister();
+    dragDownRegister();
     return Scaffold(
       backgroundColor: Colors.white,
       body: ModalProgressHUD(
@@ -262,13 +262,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 24.0,
               ),
               Flexible(
-                child: Paddy(
-                        op: () async {
-                          register();
-                        },
-                        textVal: 'Register',
-                        bColor: Colors.blue)
-                    .getPadding(),
+                child: Hero(
+                  tag: 'Register',
+                  child: Paddy(
+                          op: () async {
+                            register();
+                          },
+                          textVal: 'Register',
+                          bColor: Colors.blue)
+                      .getPadding(),
+                ),
               ),
             ],
           ),
