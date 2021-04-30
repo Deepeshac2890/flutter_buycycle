@@ -141,7 +141,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 48.0,
               ),
               GestureDetector(
-                onHorizontalDragDown: (DragDownDetails) {
+                onHorizontalDragDown: (dragDownDetails) {
                   SystemChannels.textInput.invokeMethod('TextInput.hide');
                 },
                 child: TextField(
@@ -159,7 +159,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 8.0,
               ),
               GestureDetector(
-                onHorizontalDragDown: (DragDownDetails) {
+                onHorizontalDragDown: (dragDownDetails) {
                   SystemChannels.textInput.invokeMethod('TextInput.hide');
                 },
                 child: TextField(
@@ -177,7 +177,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 8.0,
               ),
               GestureDetector(
-                onHorizontalDragDown: (DragDownDetails) {
+                onHorizontalDragDown: (dragDownDetails) {
                   SystemChannels.textInput.invokeMethod('TextInput.hide');
                 },
                 child: TextField(
@@ -195,7 +195,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 8.0,
               ),
               GestureDetector(
-                onHorizontalDragDown: (DragDownDetails) {
+                onHorizontalDragDown: (dragDownDetails) {
                   SystemChannels.textInput.invokeMethod('TextInput.hide');
                 },
                 child: TextField(
@@ -307,6 +307,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget getPicker() {
     if (Platform.isIOS)
       return getIOSPicker();
-    else if (Platform.isAndroid) return getAndroidPicker();
+    else
+      return getAndroidPicker();
   }
 }

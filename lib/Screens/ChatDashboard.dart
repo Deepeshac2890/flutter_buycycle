@@ -162,6 +162,7 @@ class _ChatDashboardState extends State<ChatDashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
+                  // ignore: deprecated_member_use
                   child: FlatButton(
                     onPressed: () {
                       // Something will happen
@@ -176,6 +177,7 @@ class _ChatDashboardState extends State<ChatDashboard> {
                   ),
                 ),
                 Expanded(
+                  // ignore: deprecated_member_use
                   child: FlatButton(
                     onPressed: () {
                       //Something will happen

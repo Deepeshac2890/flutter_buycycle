@@ -100,6 +100,7 @@ class BottomBarIcons extends StatelessWidget {
         color: color1, // button color
         child: InkWell(
           onLongPress: () {
+            // ignore: deprecated_member_use
             Scaffold.of(context).showSnackBar(
               SnackBar(
                 elevation: 0,

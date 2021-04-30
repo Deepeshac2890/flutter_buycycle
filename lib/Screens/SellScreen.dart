@@ -73,6 +73,7 @@ class _SellScreenState extends State<SellScreen> {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 5.0,
+        // ignore: deprecated_member_use
         child: FlatButton(
           onPressed: () {
             print(addInfo);
@@ -106,6 +107,7 @@ class _SellScreenState extends State<SellScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class InputWithTitle extends StatelessWidget {
   String inputTitle;
   String hintText;

@@ -268,6 +268,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
+                          // ignore: deprecated_member_use
                           child: FlatButton(
                             onPressed: () {
                               // Something will happen
@@ -283,6 +284,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         ),
                         Expanded(
+                          // ignore: deprecated_member_use
                           child: FlatButton(
                             onPressed: () {
                               //Something will happen
@@ -355,6 +357,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
+          // ignore: deprecated_member_use
           FlatButton(
             onPressed: () {
               messageTextController.clear();
@@ -458,6 +461,7 @@ class _ChatScreenState extends State<ChatScreen> {
               flex: 1,
               child: Container(
                 margin: EdgeInsets.all(10),
+                // ignore: deprecated_member_use
                 child: FlatButton(
                   color: Colors.black54,
                   shape: RoundedRectangleBorder(
@@ -519,6 +523,7 @@ class PriceSuggestor extends StatelessWidget {
     return Flexible(
       child: Container(
         margin: EdgeInsets.all(5),
+        // ignore: deprecated_member_use
         child: FlatButton(
           shape: RoundedRectangleBorder(
             side: BorderSide(color: Colors.grey),
@@ -604,6 +609,7 @@ class MessageStream extends StatelessWidget {
  In future release try to give it in the List widget only problem that we face here
  was that when tried making the message bubble stateful the sent messages were not
  displayed instantly.*/
+// ignore: must_be_immutable
 class MessageBubble extends StatelessWidget {
   final String sender;
   String text;
@@ -669,6 +675,7 @@ class MessageBubble extends StatelessWidget {
     String lang = await ds.data['Language'];
     var translatedText = await translator.translate(text, to: lang);
     // Alert(context: ctx, title: translatedText.text).show();
+    // ignore: deprecated_member_use
     Scaffold.of(ctx).showSnackBar(
       SnackBar(
         content: Text(translatedText.text),
@@ -677,6 +684,7 @@ class MessageBubble extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class OfferBubble extends StatelessWidget {
   final String sender;
   final String text;

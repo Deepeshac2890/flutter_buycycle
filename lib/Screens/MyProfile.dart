@@ -230,10 +230,10 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
     var reference = fbs.ref().child('Profile Images').child(loggedUser.email);
 
     try {
-      StorageUploadTask uploadTask = await reference.putFile(imgFile);
+      StorageUploadTask uploadTask = reference.putFile(imgFile);
       StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
       String url = await storageTaskSnapshot.ref.getDownloadURL();
-      var data = await fs
+      await fs
           .collection('Users')
           .document(loggedUser.uid)
           .collection('Details')
@@ -244,7 +244,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
         'Name': name,
         'Profile Image': url
       });
-      await getData();
+      getData();
     } catch (e) {
       Alert(
           context: context,
@@ -272,6 +272,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                 color: Colors.blueAccent,
                 child: InkWell(
                   splashColor: Colors.redAccent,
+                  // ignore: missing_required_param, deprecated_member_use
                   child: FlatButton(
                     child: Text(
                       'Upload Profile Pic',
@@ -293,6 +294,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                 color: Colors.blueAccent,
                 child: InkWell(
                   splashColor: Colors.redAccent,
+                  // ignore: missing_required_param, deprecated_member_use
                   child: FlatButton(
                     child: Text(
                       'Revert to Old Pic',
@@ -364,6 +366,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
           showUpload = true;
         });
       } else {
+        // ignore: deprecated_member_use
         Scaffold.of(context).showSnackBar(
           SnackBar(
             content: Text('Image Selection Failed'),

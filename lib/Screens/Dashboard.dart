@@ -88,7 +88,7 @@ class _DashBoardState extends State<DashBoard> {
         adInfo = await a.data['AdInfo'];
         location = await a.data['Location'];
         price = await a.data['Price'];
-        var docId = await a.documentID;
+        var docId = a.documentID;
         List<String> urls = [];
         QuerySnapshot internalQS = await fs
             .collection('Cycle')

@@ -54,6 +54,7 @@ class _SellScreenFinalState extends State<SellScreenFinal> {
   FirebaseAuth fa = FirebaseAuth.instance;
   var fs = Firestore.instance;
   BuildContext ctx;
+  // ignore: deprecated_member_use
   List<Asset> images = List<Asset>();
   List<String> imageUrls = <String>[];
   bool isUploading = false;
@@ -176,7 +177,7 @@ class _SellScreenFinalState extends State<SellScreenFinal> {
             ),
             Expanded(
               child: GestureDetector(
-                onHorizontalDragDown: (DragDownDetails) {
+                onHorizontalDragDown: (dragDownDetails) {
                   SystemChannels.textInput.invokeMethod('TextInput.hide');
                 },
                 child: Container(
@@ -203,7 +204,7 @@ class _SellScreenFinalState extends State<SellScreenFinal> {
             ),
             Expanded(
               child: GestureDetector(
-                onHorizontalDragDown: (DragDownDetails) {
+                onHorizontalDragDown: (dragDownDetails) {
                   SystemChannels.textInput.invokeMethod('TextInput.hide');
                 },
                 child: Container(
@@ -221,6 +222,7 @@ class _SellScreenFinalState extends State<SellScreenFinal> {
           ],
         ),
         bottomNavigationBar: BottomAppBar(
+          // ignore: deprecated_member_use
           child: FlatButton(
             child: Text('Publish'),
             onPressed: () {

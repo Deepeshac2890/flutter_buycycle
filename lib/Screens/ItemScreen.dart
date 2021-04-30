@@ -277,6 +277,7 @@ class _ItemScreenState extends State<ItemScreen> {
 
   void showLocation(var context, var locationName) {
     // This gives that non interruptive alert known as toast in Android.
+    // ignore: deprecated_member_use
     Scaffold.of(context).showSnackBar(
       SnackBar(
         content: Text(locationName),
