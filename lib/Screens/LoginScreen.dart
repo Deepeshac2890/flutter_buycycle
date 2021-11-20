@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isSpinning = false;
   String emailId;
   String passwd;
+  var forgotEmailController = TextEditingController();
 
   void login() async {
     setState(() {
@@ -62,7 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  var forgotEmailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([

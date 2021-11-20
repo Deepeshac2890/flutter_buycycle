@@ -24,7 +24,6 @@ For Personal Reference
 * ModalProgressHUD
 */
 
-// My Personal TODO List
 // TODO: Add more information in this portion
 // TODO: Add edit option for certain details
 

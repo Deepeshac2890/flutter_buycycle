@@ -26,6 +26,7 @@ For Personal Reference
 */
 // TODO List:
 // TODO: Minor Fix needed in the layout. If needed create 2 reg pages.
+// TODO: Add toast to show user registered
 class RegistrationScreen extends StatefulWidget {
   static String id = 'Registration_Screen';
   @override

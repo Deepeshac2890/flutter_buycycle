@@ -27,6 +27,7 @@ For Personal Reference
 * GestureDetector
 * ImageSlider
 */
+// TODO: Use Tab View instead here
 
 Firestore fs = Firestore.instance;
 FirebaseAuth fa = FirebaseAuth.instance;
@@ -160,10 +161,11 @@ class _DashBoardState extends State<DashBoard> {
               ),
             ),
             IconButton(
-                icon: Icon(Icons.logout),
-                onPressed: () {
-                  logout();
-                }),
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                logout();
+              },
+            ),
           ],
           backgroundColor: Colors.black,
         ),
