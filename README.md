@@ -2,6 +2,8 @@
 
 It is a E-Commerce Platform.
 
+Architecture used : BLOC
+
 The Features are : 
 1. One on One Chat between Seller and Buyer with message that are encoded. 
 2. Translation of the messages to the default language selected by user.
